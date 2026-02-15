@@ -2,7 +2,7 @@ Program.cs
 
 /*
  * PROGRAM.CS - Main Application File
- * This is the entry point of your ASP.NET Core application
+ * This is the entry point of  ASP.NET Core application
  * It configures how your web app works and starts it
  */
 
@@ -21,7 +21,7 @@ builder.Services.AddControllersWithViews();
 var app = builder.Build();
 
 // ============================================================================
-// PART 1: AUTO-OPEN BROWSER (This is extra - helps beginners)
+// PART 1: AUTO-OPEN BROWSER 
 // ============================================================================
 // Check if we're in development mode (working on your computer)
 if (app.Environment.IsDevelopment())
