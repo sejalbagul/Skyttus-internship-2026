@@ -1,0 +1,50 @@
+.contact {
+  padding: 80px 40px;
+  background: var(--card-bg);
+  color: var(--text-color);
+  text-align: center;
+}
+
+.contact h2 {
+  font-size: 32px;
+  margin-bottom: 30px;
+  color: #38bdf8;
+}
+
+.contact-form {
+  max-width: 500px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 12px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+}
+
+.contact-form button {
+  padding: 12px;
+  background: #38bdf8;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.error {
+  color: #f87171;
+  font-size: 14px;
+  text-align: left;
+}
+
+/* 🔹 Mobile Responsive */
+@media (max-width: 768px) {
+  .contact {
+    padding: 60px 20px;
+  }
+}
