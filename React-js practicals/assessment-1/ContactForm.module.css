@@ -1,0 +1,25 @@
+.contact {
+    padding: 80px 0;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.form input,
+.form textarea {
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border-radius: 5px;
+}
+
+.form span {
+    color: red;
+    font-size: 0.8rem;
+}

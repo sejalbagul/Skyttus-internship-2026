@@ -1,0 +1,24 @@
+.card {
+    background: var(--card-bg);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.image {
+    font-size: 3rem;
+    text-align: center;
+    padding: 1rem;
+    background: var(--accent);
+}
+
+.tech {
+    display: flex;
+    gap: 0.5rem;
+    margin: 0.5rem 0;
+}
+
+.tech span {
+    background: var(--bg-secondary);
+    padding: 0.2rem 0.5rem;
+    border-radius: 20px;
+}
