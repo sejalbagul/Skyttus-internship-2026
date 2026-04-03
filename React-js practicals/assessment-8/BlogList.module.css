@@ -1,0 +1,14 @@
+.list {
+    padding: 1.5rem;
+}
+
+.list h2 {
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
