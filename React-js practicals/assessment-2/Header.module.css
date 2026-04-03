@@ -1,0 +1,46 @@
+.header {
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    flex-wrap: wrap;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.nav {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav a {
+    text-decoration: none;
+    color: #333;
+    transition: color 0.2s;
+}
+
+.nav a:hover {
+    color: #e67e22;
+}
+
+@media (max-width: 768px) {
+    .inner {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    .nav {
+        gap: 1rem;
+    }
+}
