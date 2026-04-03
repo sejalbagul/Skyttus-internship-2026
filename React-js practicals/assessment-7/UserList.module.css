@@ -1,0 +1,17 @@
+.container {
+    width: 100%;
+}
+
+.container h2 {
+    margin-bottom: 1rem;
+    color: #2c3e50;
+}
+
+.emptyMessage {
+    text-align: center;
+    padding: 2rem;
+    background: #f9f9f9;
+    border-radius: 12px;
+    color: #e74c3c;
+    font-weight: bold;
+}
