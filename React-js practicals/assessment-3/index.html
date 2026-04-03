@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App | Task Manager</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .todo-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 600px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+        
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+        }
+        
+        .add-task {
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+        
+        .error-message.show {
+            display: block;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .input-group input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.2s;
+        }
+        
+        .input-group input:focus {
+            border-color: #667eea;
+        }
+        
+        .input-group button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        
+        .input-group button:hover {
+            background: #5a67d8;
+        }
+        
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: white;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .filter-btn {
+            background: none;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+        
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        .todo-list {
+            list-style: none;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .todo-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.2s;
+        }
+        
+        .todo-item:hover {
+            background: #f8f9ff;
+        }
+        
+        .todo-item.completed .task-text {
+            text-decoration: line-through;
+            color: #adb5bd;
+        }
+        
+        .todo-check {
+            margin-right: 15px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        
+        .task-text {
+            flex: 1;
+            font-size: 1rem;
+            word-break: break-word;
+        }
+        
+        .edit-btn,
+        .delete-btn {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 10px;
+            padding: 5px 8px;
+            border-radius: 8px;
+            transition: 0.2s;
+        }
+        
+        .edit-btn:hover {
+            background: #ffc107;
+            color: white;
+        }
+        
+        .delete-btn:hover {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .empty-message {
+            text-align: center;
+            padding: 2rem;
+            color: #6c757d;
+        }
+        
+        .footer {
+            padding: 1rem;
+            text-align: center;
+            background: #f8f9fa;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        @media (max-width: 500px) {
+            .input-group {
+                flex-direction: column;
+            }
+            .todo-item {
+                flex-wrap: wrap;
+            }
+            .task-text {
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="todo-container">
+        <div class="header">
+            <h1>📝 Task Manager</h1>
+        </div>
+
+        <div class="add-task">
+            <div id="errorMsg" class="error-message"></div>
+            <div class="input-group">
+                <input type="text" id="taskInput" placeholder="What needs to be done?">
+                <button id="addBtn">+ Add Task</button>
+            </div>
+        </div>
+
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="pending">Pending</button>
+            <button class="filter-btn" data-filter="completed">Completed</button>
+        </div>
+
+        <ul id="todoList" class="todo-list">
+            <li class="empty-message">✨ Your tasks will appear here</li>
+        </ul>
+
+        <div class="footer">
+            <span id="taskCount">0 tasks</span> | Click to edit ✏️ or delete 🗑️
+        </div>
+    </div>
+
+    <script>
+        // ---------- DOM elements ----------
+        const todoListEl = document.getElementById('todoList');
+        const taskInput = document.getElementById('taskInput');
+        const addBtn = document.getElementById('addBtn');
+        const errorMsgDiv = document.getElementById('errorMsg');
+        const taskCountSpan = document.getElementById('taskCount');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+
+        // ---------- App state ----------
+        let todos = []; // array of { id, text, completed }
+        let currentFilter = 'all';
+
+        // ---------- Helper: Save to localStorage ----------
+        function saveToLocalStorage() {
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
+
+        // ---------- Helper: Load from localStorage ----------
+        function loadFromLocalStorage() {
+            const stored = localStorage.getItem('todos');
+            if (stored) {
+                todos = JSON.parse(stored);
+            } else {
+                todos = [];
+            }
+        }
+
+        // ---------- Helper: Show error (auto-hide after 2.5s) ----------
+        function showError(message) {
+            errorMsgDiv.textContent = message;
+            errorMsgDiv.classList.add('show');
+            setTimeout(() => {
+                errorMsgDiv.classList.remove('show');
+            }, 2500);
+        }
+
+        // ---------- Helper: Update task count display ----------
+        function updateTaskCount() {
+            const total = todos.length;
+            const pending = todos.filter(t => !t.completed).length;
+            taskCountSpan.textContent = `${total} task${total !== 1 ? 's' : ''} (${pending} pending)`;
+        }
+
+        // ---------- Render todos based on current filter (DOM manipulation) ----------
+        function renderTodos() {
+            // Filter todos
+            let filteredTodos = [];
+            if (currentFilter === 'all') {
+                filteredTodos = todos;
+            } else if (currentFilter === 'pending') {
+                filteredTodos = todos.filter(t => !t.completed);
+            } else if (currentFilter === 'completed') {
+                filteredTodos = todos.filter(t => t.completed);
+            }
+
+            // Clear the list (DOM manipulation)
+            todoListEl.innerHTML = '';
+
+            if (filteredTodos.length === 0) {
+                // Show empty message
+                const emptyLi = document.createElement('li');
+                emptyLi.className = 'empty-message';
+                emptyLi.textContent = currentFilter === 'all' ? '✨ No tasks yet. Add one above!' : `😴 No ${currentFilter} tasks`;
+                todoListEl.appendChild(emptyLi);
+            } else {
+                // Create each todo item dynamically
+                filteredTodos.forEach(todo => {
+                    const li = document.createElement('li');
+                    li.className = `todo-item ${todo.completed ? 'completed' : ''}`;
+                    li.dataset.id = todo.id;
+
+                    // Checkbox (mark completed)
+                    const checkBox = document.createElement('input');
+                    checkBox.type = 'checkbox';
+                    checkBox.className = 'todo-check';
+                    checkBox.checked = todo.completed;
+                    // Event listener for toggle (change event)
+                    checkBox.addEventListener('change', (e) => {
+                        e.stopPropagation(); // prevent bubbling if needed
+                        toggleComplete(todo.id);
+                    });
+
+                    // Task text span
+                    const taskSpan = document.createElement('span');
+                    taskSpan.className = 'task-text';
+                    taskSpan.textContent = todo.text;
+
+                    // Edit button
+                    const editBtn = document.createElement('button');
+                    editBtn.textContent = '✏️';
+                    editBtn.className = 'edit-btn';
+                    editBtn.title = 'Edit task';
+
+                    // Delete button
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.textContent = '🗑️';
+                    deleteBtn.className = 'delete-btn';
+                    deleteBtn.title = 'Delete task';
+
+                    // Use event delegation? We'll attach individual listeners for simplicity,
+                    // but the requirement says "Use event delegation for delete/edit buttons"
+                    // So we'll use event delegation on the parent container (todoListEl)
+                    // Instead of attaching listeners directly, we'll rely on a delegated event.
+                    // For clarity, we remove the individual listeners and will handle clicks on todoListEl.
+                    // But we still need the buttons to be identifiable.
+                    // So we'll NOT add click listeners here; we'll add them in the delegated event listener.
+
+                    li.appendChild(checkBox);
+                    li.appendChild(taskSpan);
+                    li.appendChild(editBtn);
+                    li.appendChild(deleteBtn);
+
+                    todoListEl.appendChild(li);
+                });
+            }
+
+            updateTaskCount();
+            saveToLocalStorage();
+        }
+
+        // ---------- Core functions ----------
+        function addTodo() {
+            const text = taskInput.value.trim();
+            if (text === '') {
+                showError('❌ Task cannot be empty!');
+                return;
+            }
+            // Prevent duplicate? Not required, but fine.
+            const newTodo = {
+                id: Date.now(),
+                text: text,
+                completed: false
+            };
+            todos.push(newTodo);
+            taskInput.value = '';
+            renderTodos();
+        }
+
+        function toggleComplete(id) {
+            const todo = todos.find(t => t.id === id);
+            if (todo) {
+                todo.completed = !todo.completed;
+                renderTodos();
+            }
+        }
+
+        function deleteTodo(id) {
+            todos = todos.filter(t => t.id !== id);
+            renderTodos();
+        }
+
+        function editTodo(id, newText) {
+            if (!newText || newText.trim() === '') {
+                showError('Task text cannot be empty!');
+                return false;
+            }
+            const todo = todos.find(t => t.id === id);
+            if (todo) {
+                todo.text = newText.trim();
+                renderTodos();
+                return true;
+            }
+            return false;
+        }
+
+        // ---------- Event Delegation for edit/delete (and also checkbox? but checkbox we used change event) ----------
+        // Requirement: "Use event delegation for delete/edit buttons"
+        todoListEl.addEventListener('click', (e) => {
+            // Find the clicked button
+            const target = e.target;
+            const li = target.closest('.todo-item');
+            if (!li) return;
+            const id = parseInt(li.dataset.id);
+
+            // Edit button
+            if (target.classList.contains('edit-btn')) {
+                const currentTask = todos.find(t => t.id === id);
+                if (currentTask) {
+                    const newText = prompt('Edit task:', currentTask.text);
+                    if (newText !== null) {
+                        editTodo(id, newText);
+                    }
+                }
+            }
+            // Delete button
+            else if (target.classList.contains('delete-btn')) {
+                if (confirm('Delete this task?')) {
+                    deleteTodo(id);
+                }
+            }
+            // Note: checkbox change is handled separately by its own change event (to avoid confusion with click bubbling)
+        });
+
+        // ---------- Filter change (event) ----------
+        function setFilter(filter) {
+            currentFilter = filter;
+            // Update active class on buttons
+            filterBtns.forEach(btn => {
+                if (btn.dataset.filter === filter) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            renderTodos();
+        }
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const filterValue = btn.dataset.filter;
+                setFilter(filterValue);
+            });
+        });
+
+        // ---------- Add task (submit event on button, also allow Enter key) ----------
+        addBtn.addEventListener('click', addTodo);
+        taskInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                addTodo();
+            }
+        });
+
+        // ---------- Initialize ----------
+        loadFromLocalStorage();
+        renderTodos();
+        setFilter('all'); // ensures active class and correct render
+    </script>
+</body>
+
+</html>
