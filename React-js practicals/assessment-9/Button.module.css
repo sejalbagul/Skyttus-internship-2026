@@ -1,0 +1,35 @@
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.primary {
+    background: #3498db;
+    color: white;
+}
+
+.primary:hover {
+    background: #2980b9;
+}
+
+.danger {
+    background: #e74c3c;
+    color: white;
+}
+
+.danger:hover {
+    background: #c0392b;
+}
+
+.success {
+    background: #27ae60;
+    color: white;
+}
+
+.success:hover {
+    background: #219a52;
+}

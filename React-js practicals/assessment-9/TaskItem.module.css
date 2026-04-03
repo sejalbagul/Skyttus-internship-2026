@@ -1,0 +1,38 @@
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 0.8rem;
+    transition: 0.2s;
+}
+
+.item.completed {
+    background: #f0fff0;
+    opacity: 0.8;
+}
+
+.content h3 {
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+}
+
+.content p {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.checkbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
