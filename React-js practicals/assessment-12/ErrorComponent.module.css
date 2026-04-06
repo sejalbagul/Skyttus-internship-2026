@@ -1,0 +1,15 @@
+.container {
+    text-align: center;
+    padding: 2rem;
+    color: #e74c3c;
+}
+
+.container button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
