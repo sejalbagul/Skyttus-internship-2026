@@ -1,0 +1,34 @@
+.nav {
+    background: #2c3e50;
+    color: white;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.links a {
+    color: white;
+    margin-right: 1.5rem;
+    text-decoration: none;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
+
+.userInfo {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.logoutBtn {
+    background: #e74c3c;
+    border: none;
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 5px;
+    cursor: pointer;
+}

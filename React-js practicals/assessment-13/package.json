@@ -1,0 +1,31 @@
+{
+    "name": "auth-app",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "axios": "^1.14.0",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-router-dom": "^6.30.3",
+        "react-scripts": "5.0.1",
+        "web-vitals": "^5.2.0"
+    },
+    "scripts": {
+        "start": "set PORT=3013 && react-scripts start",
+        "build": "react-scripts build"
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead"
+        ],
+        "development": [
+            "last 1 chrome version"
+        ]
+    }
+}
